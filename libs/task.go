@@ -12,6 +12,6 @@ func NewTask(task ...func()) *Task {
 
 func (t *Task) Run() {
 	for _, childTask := range t.tasks {
-		childTask()
+		go childTask()
 	}
 }
