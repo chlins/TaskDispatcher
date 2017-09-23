@@ -4,6 +4,7 @@ import (
 	"log"
 )
 
+//Dispatcher is task dispatcher
 type Dispatcher struct {
 	stack     *Stack
 	workerNum int
@@ -16,6 +17,7 @@ type worker struct {
 	info        map[int]int //map[workerIndex]taskIndex
 }
 
+//NewDispatcher is construct func of dispatcher
 func NewDispatcher(num int, s *Stack) *Dispatcher {
 	ws := make([]*worker, num)
 	for i := 0; i < num; i++ {
@@ -31,6 +33,7 @@ func NewDispatcher(num int, s *Stack) *Dispatcher {
 	}
 }
 
+//Run is func of dispatcher starting
 func (d *Dispatcher) Run() {
 	for {
 		for index, w1 := range d.workers {

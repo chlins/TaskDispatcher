@@ -1,9 +1,10 @@
 package main
 
 import (
-	"./libs"
 	"log"
 	"time"
+
+	"github.com/zcytop/TaskDispatcher/libs"
 )
 
 func main() {
