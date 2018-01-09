@@ -1,7 +1,8 @@
 package TaskDispatcher
 
 import (
-	"log"
+	"fmt"
+	"os"
 	"time"
 )
 
@@ -16,7 +17,8 @@ type Task struct {
 // NewTask constructor
 func NewTask(gr int) *Task {
 	if gr <= 0 {
-		log.Fatal("Max goroutine num is invalid!")
+		fmt.Println("Max goroutine num is invalid!")
+		os.Exit(-1)
 	}
 	return &Task{
 		maxGrNum:  gr,
@@ -83,7 +85,7 @@ func (t *Task) taskLoop() {
 func (t *Task) goTask(task tasker) {
 	index := t.accquire()
 	for index == 0 {
-		log.Println("Now have no enough goroutine resources, please wait...")
+		fmt.Println("Now have no enough goroutine resources, please wait...")
 		<-time.After(100 * time.Millisecond)
 		index = t.accquire()
 	}
@@ -91,7 +93,7 @@ func (t *Task) goTask(task tasker) {
 		defer func() {
 			t.release(index)
 		}()
-		log.Printf("Goroutine %d do one task ... ", index)
+		fmt.Printf("Goroutine %d do one task ... ", index)
 		task.Run()
 	}(task, index)
 }

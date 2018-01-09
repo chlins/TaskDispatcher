@@ -9,31 +9,31 @@ import (
 type t1 struct{}
 
 func (t *t1) Run() {
-	fmt.Println("I am t1 func...")
+	fmt.Println("I am task 1")
 }
 
 type t2 struct{}
 
 func (t *t2) Run() {
-	fmt.Println("I am t2 func...")
+	fmt.Println("I am task 2")
 }
 
 type t3 struct{}
 
 func (t *t3) Run() {
-	fmt.Println("I am t3 func...")
+	fmt.Println("I am task 3")
 }
 
 type t4 struct{}
 
 func (t *t4) Run() {
-	fmt.Println("I am t4 func...")
+	fmt.Println("I am task 4")
 }
 
 type t5 struct{}
 
 func (t *t5) Run() {
-	fmt.Println("I am t5 func...")
+	fmt.Println("I am task 5")
 }
 
 func main() {
