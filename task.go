@@ -3,6 +3,7 @@ package TaskDispatcher
 import (
 	"fmt"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -12,6 +13,7 @@ type Task struct {
 	tasks     []tasker
 	pool      chan int
 	taskQueue chan tasker
+	wg        sync.WaitGroup
 }
 
 // NewTask constructor
@@ -67,8 +69,12 @@ func (t *Task) inQueue() {
 // Run start all task
 func (t *Task) Run() {
 	t.gin()
+	t.wg.Add(len(t.tasks))
 	go t.inQueue()
-	t.taskLoop()
+	go t.taskLoop()
+	t.wg.Wait()
+	close(t.pool)
+	close(t.taskQueue)
 }
 
 func (t *Task) taskLoop() {
@@ -91,6 +97,7 @@ func (t *Task) goTask(task tasker) {
 	}
 	go func(tasker, int) {
 		defer func() {
+			t.wg.Done()
 			t.release(index)
 		}()
 		fmt.Printf("Goroutine %d do one task ... ", index)
